@@ -1,6 +1,6 @@
 # TCC - Task Service (Microsserviço de Tarefas) 🤖
 
-![Status do Projeto](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
+![Status do Projeto](https://img.shields.io/badge/status-em%20revisão-yellow)
 ![Linguagem](https://img.shields.io/badge/linguagem-Python-blue)
 ![Framework](https://img.shields.io/badge/framework-Django%20Rest-green)
 
@@ -31,9 +31,9 @@ A responsabilidade principal deste serviço é:
 
 ## 🛠️ Tecnologias Utilizadas
 
-*   **Linguagem:** Java 17+
-*   **Framework:** Spring Boot 3
-*   **Gerenciador de Dependências:** Maven
+*   **Linguagem:** Python
+*   **Framework:** Django Rest
+*   **Gerenciador de Dependências:** pip
 *   **Arquitetura:** Microsserviços
 *   **Comunicação:** API REST
 
@@ -41,15 +41,26 @@ A responsabilidade principal deste serviço é:
 
 ## ☁️ Ambiente e Execução
 
-**Este serviço foi projetado para rodar em um ambiente de nuvem e não requer instalação local para uso da plataforma final.**
+Para rodar basta baixar os arquivos do repositório e, *importante*, baixar o banco PostgreeSQL em [LINK](https://www.postgresql.org/download/), se possível a versão mais atualizada. Além disso baixe o docker [LINK](https://www.docker.com/products/docker-desktop/)
 
-Toda a infraestrutura, incluindo a comunicação entre os microsserviços, é gerenciada no ambiente de deploy. Para os desenvolvedores do projeto, a execução pode ser feita localmente através do Maven com o Spring Boot.
+Crie um arquivo .env no mesmo local onde há o arquivo .env.example. Preencha o arquivo .env com as variaveis que estão no arquivo .env.example.
+
+Agora com as variaveis preenchidas rode o comando
+
+`python manage.py makemigrations`
+`python manage.py migrate`
+
+Após isso, perceba que haverá um arquivo dockerfile, então vá para o diretorio que tem esse arquivo e digite esses dois comandos no terminal
+
+`docker build -t nomeimagem .`
+
+Após a criação da imagem, basta rodar o docker.
+
+`docker run -p 80:80 nomeimagem`
+
+**OBS: Importante destacar, este serviço é conectado ao serviço de autenticação no git: [LINK](https://github.com/MoisesOSampaio/Tcc_AuthService), portanto é necessário baixa-lo para rodar o serviço.**
 
 ```bash
-# Comando para executar localmente (para desenvolvedores)
-./mvnw spring-boot:run```
-
-Não há necessidade de configurações especiais (arquivos `.env`) para o usuário final, pois a plataforma será acessada via web.
 
 ##  API Endpoints
 
@@ -59,6 +70,6 @@ Não há necessidade de configurações especiais (arquivos `.env`) para o usuá
 | :------ | :---------------------------------------------------------------------------------- | :---------------------------------------------|
 | `POST`  | `'task/create/', CreateTaskView.as_view(), name='task-create'`                      | Cria uma nova tarefa.                         |
 | `GET`   | `'task/', GetTaskView.as_view(), name='task-get-all'`                               | Retorna uma lista de todas as tarefas.        |
-| `PATH`  | `'task/patch/<int:pk>/', PatchTaskView.as_view(), name='task-patch'`                | Atualiza parcialmente uma tarefa específica.  |
+| `PATCH` | `'task/patch/<int:pk>/', PatchTaskView.as_view(), name='task-patch'`                | Atualiza parcialmente uma tarefa específica.  |
 | `DELETE`| `'task/delete/<int:pk>/', DeleteTaskView.as_view(), name='task-delete'`             | Remove uma tarefa específica.                 |
 | `GET`   | `'task/selectUser/<int:pk>/', ChooseUserToDoTask.as_view(), name='task-chooseUser'` | Busca os detalhes de uma tarefa específica.   |
