@@ -62,12 +62,3 @@ Não há necessidade de configurações especiais (arquivos `.env`) para o usuá
 | `GET` | `/tasks/{id}` | Busca os detalhes de uma tarefa específica. |
 | `PUT` | `/tasks/{id}` | Atualiza uma tarefa existente. |
 | `GET` | `/tasks/{id}/suggestions` | **[Principal]** Retorna a lista de desenvolvedores sugeridos pela IA para a tarefa. |
-
-## 👥 Contribuidores
-
-*   **[Moisés O. Sampaio](https://github.com/MoisesOSampaio)** - Dono do Repositório
-*   _(Adicione outros membros da equipe aqui)_
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
