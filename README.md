@@ -41,7 +41,7 @@ A responsabilidade principal deste serviço é:
 
 ## ☁️ Ambiente e Execução
 
-Para rodar basta baixar os arquivos do repositório e, *importante*, baixar o banco PostgreeSQL em [LINK](https://www.postgresql.org/download/), se possível a versão mais atualizada. Além disso baixe o docker [LINK](https://www.docker.com/products/docker-desktop/)
+Para rodar basta baixar os arquivos do repositório e, *importante*, baixar o banco PostgreeSQL em [Postgreesql](https://www.postgresql.org/download/), se possível a versão mais atualizada. Além disso baixe o docker [Docker](https://www.docker.com/products/docker-desktop/)
 
 Crie um arquivo .env no mesmo local onde há o arquivo .env.example. Preencha o arquivo .env com as variaveis que estão no arquivo .env.example.
 
@@ -58,7 +58,7 @@ Após a criação da imagem, basta rodar o docker.
 
 `docker run -p 80:80 nomeimagem`
 
-**OBS: Importante destacar, este serviço é conectado ao serviço de autenticação no git: [LINK](https://github.com/MoisesOSampaio/Tcc_AuthService), portanto é necessário baixa-lo para rodar o serviço.**
+**OBS: Importante destacar, este serviço é conectado ao serviço de autenticação no git: [Tcc_AuthService](https://github.com/MoisesOSampaio/Tcc_AuthService), portanto é necessário baixa-lo para rodar o serviço.**
 
 ```bash
 
