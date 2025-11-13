@@ -1,8 +1,8 @@
 # TCC - Task Service (Microsserviço de Tarefas) 🤖
 
 ![Status do Projeto](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
-![Linguagem](https://img.shields.io/badge/linguagem-Java-blue)
-![Framework](https://img.shields.io/badge/framework-Spring%20Boot-green)
+![Linguagem](https://img.shields.io/badge/linguagem-Python-blue)
+![Framework](https://img.shields.io/badge/framework-Django%20Rest-green)
 
 Este repositório contém o código-fonte do **Task Service**, um microsserviço fundamental para o nosso projeto de Gerenciamento de Equipes Ágeis.
 
@@ -51,14 +51,14 @@ Toda a infraestrutura, incluindo a comunicação entre os microsserviços, é ge
 
 Não há necessidade de configurações especiais (arquivos `.env`) para o usuário final, pois a plataforma será acessada via web.
 
-##  API Endpoints (Exemplos)
+##  API Endpoints
 
-> **Nota:** Estes são exemplos dos principais endpoints. Verifique o código-fonte para a lista completa e detalhes de request/response.
+**Nota: principais endpoints. Verifique o código-fonte para a lista completa e detalhes de request/response.**
 
-| Método | Endpoint | Descrição |
-| :--- | :--- | :--- |
-| `POST` | `/tasks` | Cria uma nova tarefa. |
-| `GET` | `/tasks` | Retorna uma lista de todas as tarefas. |
-| `GET` | `/tasks/{id}` | Busca os detalhes de uma tarefa específica. |
-| `PUT` | `/tasks/{id}` | Atualiza uma tarefa existente. |
-| `GET` | `/tasks/{id}/suggestions` | **[Principal]** Retorna a lista de desenvolvedores sugeridos pela IA para a tarefa. |
+| Método  | Endpoint                                                                            | Descrição                                     |
+| :------ | :---------------------------------------------------------------------------------- | :---------------------------------------------|
+| `POST`  | `'task/create/', CreateTaskView.as_view(), name='task-create'`                      | Cria uma nova tarefa.                         |
+| `GET`   | `'task/', GetTaskView.as_view(), name='task-get-all'`                               | Retorna uma lista de todas as tarefas.        |
+| `PATCH` | `'task/patch/<int:pk>/', PatchTaskView.as_view(), name='task-patch'`                | Atualiza parcialmente uma tarefa específica.  |
+| `DELETE`| `'task/delete/<int:pk>/', DeleteTaskView.as_view(), name='task-delete'`             | Remove uma tarefa específica.                 |
+| `GET`   | `'task/selectUser/<int:pk>/', ChooseUserToDoTask.as_view(), name='task-chooseUser'` | Busca os detalhes de uma tarefa específica.   |
