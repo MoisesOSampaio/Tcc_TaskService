@@ -14,46 +14,43 @@ import os
 #from google import genai
 from google.genai import types
 
+class Views:
 
+    def verify_authentication(self, request, callback):
+        access_token : str = request.headers['Authorization'] 
+        access_token = access_token.split(' ')[1]
+        
+        print(access_token)
+        body = {"token" : access_token}
+        print(body)
+        validacao = requests.post(url=f'{os.getenv('AUTH_URL')}api/token/verify/', data=body)
+        validacao = validacao.json()
+        print(f"validando:{validacao}")
 
-class CreateTaskView(generics.CreateAPIView):
+        if validacao != {}:
+            return Response(validacao, status=status.HTTP_401_UNAUTHORIZED)
+        
+        return callback(request)
+
+class CreateTaskView(generics.CreateAPIView,Views):
     serializer_class = TaskSerializer
     queryset = Task.objects.all()
 
     def post(self, request, *args, **kwargs):
-        access_token = request.COOKIES.get("access_token")
-        cookies = {"access_token" : access_token}
-        validacao = requests.post(url=f'{os.getenv("AUTH_URL")}api/token/verify/', cookies=cookies)
-        validacao = validacao.json()
-        
+        self.verify_authentication(request,self.create)
 
-        if validacao != {}:
-            return Response(validacao, status=status.HTTP_401_UNAUTHORIZED)
-        
-        return self.create(request, *args, **kwargs)
     
 
-class GetTaskView(generics.ListAPIView):
+class GetTaskView(generics.ListAPIView,Views):
     serializer_class = TaskSerializer
     queryset = Task.objects.all()
 
     def get(self, request, *args, **kwargs):
-        access_token = request.COOKIES.get("access_token")
-        cookies = {"access_token" : access_token}
-        try:
-            validacao = requests.post(url=f'{os.getenv("AUTH_URL")}api/token/verify/', cookies=cookies)
-            validacao = validacao.json()
-        except Exception as e:
-            return Response({"mensagem": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR) 
-        
+        self.verify_authentication(request,self.list)
 
-        if validacao != {}:
-            return Response(validacao, status=status.HTTP_401_UNAUTHORIZED)
-        
-        return self.list(request, *args, **kwargs)
     
 
-class PatchTaskView(generics.UpdateAPIView):
+class PatchTaskView(generics.UpdateAPIView,Views):
     serializer_class = TaskSerializer
     queryset = Task.objects.all()
     lookup_field = 'pk'
@@ -62,48 +59,39 @@ class PatchTaskView(generics.UpdateAPIView):
         return Response({"mensagem": "Operação não permitida"}, status=status.HTTP_400_BAD_REQUEST)
     
     def patch(self, request, *args, **kwargs):
-        access_token = request.COOKIES.get("access_token")
-        cookies = {"access_token" : access_token}
-        validacao = requests.post(url=f'{os.getenv("AUTH_URL")}api/token/verify/', cookies=cookies)
-        validacao = validacao.json()
-        
+        return self.verify_authentication(request,self.partial_update)
 
-        if validacao != {}:
-            return Response(validacao, status=status.HTTP_401_UNAUTHORIZED)
-        
-        return self.partial_update(request, *args, **kwargs)
-
-class DeleteTaskView(generics.DestroyAPIView):
+class DeleteTaskView(generics.DestroyAPIView,Views):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     lookup_field = 'pk'
 
     def delete(self, request, *args, **kwargs):
+        return self.verify_authentication(request,self.destroy)
 
-        access_token = request.COOKIES.get("access_token")
-        cookies = {"access_token" : access_token}
-        validacao = requests.post(url=f'{os.getenv("AUTH_URL")}api/token/verify/', cookies=cookies)
-        validacao = validacao.json()
+
+
+class ChooseUserToDoTask(APIView,Views):
+
+    def verify_authentication(self, request, callback,pk):
+        access_token : str = request.headers['Authorization'] 
+        access_token = access_token.split(' ')[1]
         
+        print(access_token)
+        body = {"token" : access_token}
+        print(body)
+        validacao = requests.post(url=f'{os.getenv('AUTH_URL')}api/token/verify/', data=body)
+        validacao = validacao.json()
+        print(f"validando:{validacao}")
 
         if validacao != {}:
             return Response(validacao, status=status.HTTP_401_UNAUTHORIZED)
         
-        return self.destroy(request, *args, **kwargs)
-
-
-class ChooseUserToDoTask(APIView):
+        return callback(request,pk)
 
     def get(self, request,pk, *args, **kwargs):
-        access_token = request.COOKIES.get("access_token")
-        cookies = {"access_token" : access_token}
-        validacao = requests.post(url=f'{os.getenv("AUTH_URL")}api/token/verify/', cookies=cookies)
-        validacao = validacao.json()
-        
+        return self.verify_authentication(request,self.chooseUser,pk)
 
-        if validacao != {}:
-            return Response(validacao, status=status.HTTP_401_UNAUTHORIZED)
-        return self.chooseUser(request,pk, *args, **kwargs)
     
     def chooseUser(self, request,pk, *args, **kwargs):
         load_dotenv()
