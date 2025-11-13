@@ -59,6 +59,6 @@ Não há necessidade de configurações especiais (arquivos `.env`) para o usuá
 | :------ | :---------------------------------------------------------------------------------- | :---------------------------------------------|
 | `POST`  | `'task/create/', CreateTaskView.as_view(), name='task-create'`                      | Cria uma nova tarefa.                         |
 | `GET`   | `'task/', GetTaskView.as_view(), name='task-get-all'`                               | Retorna uma lista de todas as tarefas.        |
-| `PATCH` | `'task/patch/<int:pk>/', PatchTaskView.as_view(), name='task-patch'`                | Atualiza parcialmente uma tarefa específica.  |
+| `PATH` | `'task/patch/<int:pk>/', PatchTaskView.as_view(), name='task-patch'`                | Atualiza parcialmente uma tarefa específica.  |
 | `DELETE`| `'task/delete/<int:pk>/', DeleteTaskView.as_view(), name='task-delete'`             | Remove uma tarefa específica.                 |
 | `GET`   | `'task/selectUser/<int:pk>/', ChooseUserToDoTask.as_view(), name='task-chooseUser'` | Busca os detalhes de uma tarefa específica.   |
