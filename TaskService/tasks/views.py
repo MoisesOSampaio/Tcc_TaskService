@@ -29,7 +29,6 @@ class Views:
 
         if validacao != {}:
             return Response(validacao, status=status.HTTP_401_UNAUTHORIZED)
-        
         return callback(request)
 
 class CreateTaskView(generics.CreateAPIView,Views):
@@ -37,7 +36,7 @@ class CreateTaskView(generics.CreateAPIView,Views):
     queryset = Task.objects.all()
 
     def post(self, request, *args, **kwargs):
-        self.verify_authentication(request,self.create)
+        return self.verify_authentication(request,self.create)
 
     
 
@@ -46,7 +45,7 @@ class GetTaskView(generics.ListAPIView,Views):
     queryset = Task.objects.all()
 
     def get(self, request, *args, **kwargs):
-        self.verify_authentication(request,self.list)
+        return self.verify_authentication(request,self.list)
 
     
 
